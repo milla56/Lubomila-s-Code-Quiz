@@ -30,6 +30,11 @@
         <div id="choices" class="choices"></div>
       </div>
 
+      <audio class="my_audio" controls preload="none">
+        <source src="audio/correct.wav" type="audio/mpeg" id="win-sound">
+        <source src="audio/incorrect.wav" type="audio/mpeg" id="lose-sound">
+    </audio>
+
       <div id="end-screen" class="hide">
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span>.</p>
