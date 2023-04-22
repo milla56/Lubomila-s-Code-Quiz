@@ -9,20 +9,14 @@ let feedbackUser = document.querySelector('#feedback');
 
 
 let currentQuestion = 0;
-let remainingTime = questions.length * 15;
+let remainingTime = questionsId.length * 15;
 let timeInterval;
 
-// Set the sound 
-// let winSound = new Audio('correct.wav');
-// //winSound();
-// let losesound = new Audio('incorrect.wav');
-// losesound();
 
 // Start the quiz
 function startQuiz(){
     let startScreen = document.querySelector('#start-screen');
     startScreen.style.display = 'none';
-    // console.log(startScreen);
     questionsId.removeAttribute('class');
     showQuestion();
     timeInterval = setInterval(updateTime, 1000);
@@ -42,29 +36,31 @@ function showQuestion() {
     }
 }
 
+// Audio
+// var soundCorrect = new Audio("audio/correct.wav");
+// var soundIncorrect = new Audio("audio/incorrect.wav");
+
 // Check if andswer is correct
 function checkAnswer(event) {
     event.preventDefault();
     const clickedAnswer = event.target.textContent;
     if(clickedAnswer === questions[currentQuestion].correctAnswer){
-        // correct answer + move to the next question
         currentQuestion++;
-        // if all questions are correct
         if(currentQuestion === questions.length){
             endQuiz();
         } else {
             showQuestion();
+            // soundCorrect.play();
         }
         feedbackUser.textContent = 'Correct 👌';
+        
+        
     } else {
-        //substract 10 seconds from the timer
         remainingTime -= 10;
-        updateTime();
-        feedbackUser.textContent = 'Incorrect 👎'
+        feedbackUser.textContent = 'Incorrect 👎'; 
     }
-    //remove the class of hide to show feedback
+   
     feedbackUser.removeAttribute('class', 'hide');
-    // set time for how long to display feedback
     setTimeout(function(){
         feedbackUser.setAttribute('class', 'hide');
     }, 500);
@@ -101,8 +97,6 @@ function saveScore() {
     }
     existingScore.push(newScore);
     localStorage.setItem('highscore', JSON.stringify(existingScore));
-
-    //Redirect user
     window.location.href = 'highscores.html';
     }
 }
