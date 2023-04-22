@@ -9,7 +9,7 @@ let feedbackUser = document.querySelector('#feedback');
 
 
 let currentQuestion = 0;
-let remainingTime = questionsId.length * 15;
+let remainingTime = questions.length * 15;
 let timeInterval;
 
 
@@ -20,6 +20,7 @@ function startQuiz(){
     questionsId.removeAttribute('class');
     showQuestion();
     timeInterval = setInterval(updateTime, 1000);
+    startTimer();
 }
 
 // Show the current question and answers
@@ -37,8 +38,10 @@ function showQuestion() {
 }
 
 // Audio
-// var soundCorrect = new Audio("audio/correct.wav");
-// var soundIncorrect = new Audio("audio/incorrect.wav");
+var soundCorrect = new Audio("audio/correct.wav");
+soundCorrect.volume = 0.5;
+var soundIncorrect = new Audio("audio/incorrect.wav");
+soundIncorrect.volume = 0.5;
 
 // Check if andswer is correct
 function checkAnswer(event) {
@@ -50,13 +53,14 @@ function checkAnswer(event) {
             endQuiz();
         } else {
             showQuestion();
-            // soundCorrect.play();
+            soundCorrect.play();
         }
         feedbackUser.textContent = 'Correct 👌';
         
         
     } else {
         remainingTime -= 10;
+        soundIncorrect.play();
         feedbackUser.textContent = 'Incorrect 👎'; 
     }
    
