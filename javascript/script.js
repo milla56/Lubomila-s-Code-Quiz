@@ -9,10 +9,37 @@ var feedbackUser = document.querySelector('#feedback');
 let currentQuestion = 0;
 let remainingTime = questions.lenght*15;
 let timeInterval;
+var timer;
+var timerCount;
 
 // Set the sound 
-let winSound = new Audio('correct.wav');
-winSound();
+// let winSound = new Audio('correct.wav');
+// //winSound();
+// let losesound = new Audio('incorrect.wav');
+//losesound();
+
+// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+function startTimer() {
+  // Sets timer
+  timer = setInterval(function() {
+    timerCount--;
+    timerElement.textContent = timerCount;
+    if (timerCount >= 0) {
+      // Tests if win condition is met
+      if (isWin && timerCount > 0) {
+        // Clears interval and stops timer
+        clearInterval(timer);
+        winGame();
+      }
+    }
+    // Tests if time has run out
+    if (timerCount === 0) {
+      // Clears interval
+      clearInterval(timer);
+      loseGame();
+    }
+  }, 1000);
+}
 
 // The startQuiz function 
 
@@ -22,7 +49,10 @@ function startQuiz (){
   questions.removeAttribute('class');
   showQuestion();
   timeInterval = setInterval(updateTime, 1000);
+  
 }
+// Attach event listener to start button to call startGame function on click
+startButton.addEventListener("click", startGame);
 
 
 //Show the current question and answer
@@ -39,7 +69,7 @@ function showQuestion(){
   }
 }
 
-// Check if andswer is correct
+// Check if answer is correct
 function checkAnswer(event) {
   event.preventDefault();
   const clickedAnswer = event.target.textContent;
@@ -62,16 +92,48 @@ function checkAnswer(event) {
   }, 500);
 }
 
- // correct answer + move to the next question
-     // if all questions are correct
-     //substract 10 seconds from the timer
-
-      //remove the class of hide to show feedback
-      // set time for how long to display feedback
-
-      // update the time remaining
-
-      // End of the quiz
 
 
-      //alert and sound parenthis 5 questions
+// remaining time
+function remainingTime(){
+  time.textContent = remainingTime;
+  remainingTime --;
+  if (remainingTime <= 0){
+    endQuiz();
+  }
+}
+
+// End Quiz
+function endQuiz(){
+  clearInterval(timeInterval);
+  const endScreen = document.querySelector('#end-screen');
+  endScreen.removeAttribute('class');
+  const finalScore = document.querySelector('#final-score');
+  finalScore.textContent = remainingTime;
+  questions.setAttribute('class','hide');
+}
+  
+//Save score
+function saveScore(){
+  const initials = userInitial.ariaValueMax.trim();
+  if (initials !== ''){
+    var existingScore = JSON.parse(localStorage.getItem('highscores')) || [];
+    var newScore = {
+      score:remainingTime,
+     userInitial: initials,
+    }
+    existingScore.push(newScore);
+    localStorage.setItem('highscore',JSON.stringify(existingScore));
+    window.location.href = 'highscores.html';
+  }
+}
+
+function pressEnter(event){
+  if (event.key === 'Enter' ){
+    saveScore();
+  }
+}
+
+startBtn.addEventListener('click', startQuiz);
+submit.addEventListener('click', saveScore);
+userInitial.addEventListener('keyup', pressEnter);
