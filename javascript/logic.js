@@ -55,12 +55,12 @@ function checkAnswer(event) {
             showQuestion();
             soundCorrect.play();
         }
-        feedbackUser.textContent = 'Correct 👌';
+        feedbackUser.textContent = 'Correct ✅';
              
     } else {
         timerCount -= 10;
         soundIncorrect.play();
-        feedbackUser.textContent = 'Incorrect 👎'; 
+        feedbackUser.textContent = 'Incorrect ❌'; 
     }
    
     feedbackUser.removeAttribute('class', 'hide');
@@ -72,15 +72,13 @@ function checkAnswer(event) {
 
 // Timer Function
 function startTimer() {
-    timer = setInterval(function() {
-      timerCount--;
-      timeId.textContent = timerCount;
-      if (timerCount <= 0) {
-        clearInterval(timer);
-        endQuiz();
-      }
-    }, 1000);
-  }
+        timeId.textContent = timerCount;
+        timerCount--;
+        if(timerCount <= 0){
+            endQuiz();
+        }
+    }
+
 
 // End of the quiz
 function endQuiz() {
