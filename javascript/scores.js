@@ -7,7 +7,6 @@ function updateScore() {
 
     // sort in ascending order
     highScore.sort((a, b) => a - b);
-    // reverse the order 
     highScore.reverse();
 
     highScore.forEach(score => {

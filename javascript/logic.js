@@ -56,8 +56,7 @@ function checkAnswer(event) {
             soundCorrect.play();
         }
         feedbackUser.textContent = 'Correct 👌';
-        
-        
+             
     } else {
         timerCount -= 10;
         soundIncorrect.play();
