@@ -9,7 +9,7 @@ let feedbackUser = document.querySelector('#feedback');
 
 
 let currentQuestion = 0;
-let remainingTime = questions.length * 15;
+let timerCount = questions.length * 15;
 let timeInterval;
 
 
@@ -19,7 +19,7 @@ function startQuiz(){
     startScreen.style.display = 'none';
     questionsId.removeAttribute('class');
     showQuestion();
-    timeInterval = setInterval(updateTime, 1000);
+    timeInterval = setInterval(startTimer, 1000);
     startTimer();
 }
 
@@ -59,7 +59,7 @@ function checkAnswer(event) {
         
         
     } else {
-        remainingTime -= 10;
+        timerCount -= 10;
         soundIncorrect.play();
         feedbackUser.textContent = 'Incorrect 👎'; 
     }
@@ -70,14 +70,18 @@ function checkAnswer(event) {
     }, 500);
 }
 
-// update the time remaining
-function updateTime() {
-    timeId.textContent = remainingTime;
-    remainingTime--;
-    if(remainingTime <= 0){
+
+// Timer Function
+function startTimer() {
+    timer = setInterval(function() {
+      timerCount--;
+      timeId.textContent = timerCount;
+      if (timerCount <= 0) {
+        clearInterval(timer);
         endQuiz();
-    }
-}
+      }
+    }, 1000);
+  }
 
 // End of the quiz
 function endQuiz() {
@@ -85,7 +89,7 @@ function endQuiz() {
     const endScreen = document.querySelector('#end-screen');
     endScreen.removeAttribute('class');
     const finalScore = document.querySelector('#final-score');
-    finalScore.textContent = remainingTime;
+    finalScore.textContent = timerCount;
     questionsId.setAttribute('class', 'hide');
 }
 
@@ -96,7 +100,7 @@ function saveScore() {
     if(initials !== ''){
     let existingScore = JSON.parse(localStorage.getItem('highscore')) || [];
     let newScore = {
-        score: remainingTime,
+        score: timerCount,
         userInitials: initials,
     }
     existingScore.push(newScore);
