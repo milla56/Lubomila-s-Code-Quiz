@@ -23,9 +23,9 @@ The list shows what steps were made to complete the challenge:
  ![Incorrect-Answer](./screenshots/incorrect.gif)
  - Choosing incorrect answer, 10s will be subtracted from the timer. 
  - When all of the questions are answer the game is over. The app stores the final score and the user initials.
- ![GAME-OVER](./screenshots/gameover.gif)
+ ![GAME-OVER](./screenshots/gameover.png)
  - The second HTML page - 'Highscores' has the final score and the user initials. The score is stored in ascending order, the scores and the initials are sorted in a list and the user can choose to 'go back' to the main page or to delete the highscores.
- ![HIGHSCORES](./screenshots/highscores.gif)
+ ![HIGHSCORES](./screenshots/highscore.png)
 
 
 ## Credits

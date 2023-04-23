@@ -6,15 +6,16 @@ function updateScore() {
     let highScore = JSON.parse(localStorage.getItem('highscore')) || [];
 
     // sort in ascending order
-    highScore.sort((a, b) => a - b);
-    highScore.reverse();
-
+    highScore.sort(function(a,b){return a-b });
+   
     highScore.forEach(score => {
         let listItems = document.createElement('li');
-        listItems.textContent = score.userInitials + ' - ' + score.score;
+        listItems.textContent = score.userInitials + ' : ' + score.score;
         viewHighScores.appendChild(listItems);
     });
 }
+
+
 
 function clearScores() {
     window.localStorage.removeItem("highscore");
